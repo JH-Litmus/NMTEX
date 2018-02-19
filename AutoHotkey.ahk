@@ -18,14 +18,14 @@ SysGet, Mon1, Monitor, %mon_num%
 ; ##### path for Rscript, OCR #####
 Global	R_HOME
 Global 	OCR_HOME
-R_HOME	=	C:\Program Files\R\R-3.2.4revised\bin
-OCR_HOME	= C:\Program` Files\Tesseract-OCR
+R_HOME = C:\Program` Files\R\R-3.2.4revised\bin
+OCR_HOME = C:\Program` Files\Tesseract-OCR
 
 ; ####################################################################################################
 ; ####################################################################################################
 
 ^!f::
-
+run,  %comspec% "%OCR_HOME%\tesseract.exe" cap.jpg date
 return
 
 ; ####################################################################################################
