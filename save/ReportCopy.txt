@@ -1,0 +1,31 @@
+<<<<<<< HEAD
+ 
+ 
+Procedure:
+ 10 mCi of Tc-99m pertechnetate was intravenously injected. Dynamic images of the salivary glands were obtained before and after the gustatory stimulation.
+
+Findings:
+ Decreased uptake in bilateral parotid glands with relatively normal excretion function.
+ No remarkable finding in bilateral submandibular glands.
+ 
+
+Impression:
+ Decreased uptake function of bilateral PGs.
+
+
+=======
+ 
+ 
+Procedure:
+ 10 mCi of Tc-99m pertechnetate was intravenously injected. Dynamic images of the salivary glands were obtained before and after the gustatory stimulation.
+
+Findings:
+ Decreased uptake in bilateral parotid glands with relatively normal excretion function.
+ No remarkable finding in bilateral submandibular glands.
+ 
+
+Impression:
+ Decreased uptake function of bilateral PGs.
+
+
+>>>>>>> 8646a0be21dccc7f449c33bf17658726ad7f491f

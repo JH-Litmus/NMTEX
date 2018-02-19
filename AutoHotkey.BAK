@@ -1,0 +1,687 @@
+#include %A_ScriptDir%\lib\old_date.ahk
+#include %A_ScriptDir%\lib\reportparse.ahk
+
++!t::
+
+return
+
+
+^!n::  ; Ctrl+Alt+N
+if WinExist("Untitled - Notepad")
+    WinActivate
+else
+    Run Notepad
+return
+
+F4::
+Loop{
+		IfWinExist, ahk_class SunAwtDialog
+			WinClose
+		else
+			break			
+	}
+return
+	
+
+^!d:: 
+
+MouseClick, left,,,
+Array := reportparse()
+MouseClick, left,,,
+
+ExTitle := Array[1]
+dose := Array[12]
+
+if InStr(ExTitle,"I-") 
+	ISPECT(ExTitle)
+	
+else if InStr(ExTitle, "Lymphangiography")
+	{
+	sendinput	RI lymphangiography was performed after peritumoral injection of Tc-99m filtered tin colloid for the localization purpose of sentinel LN mapping. The others are not remarkable.
+	sendinput	{enter}
+    }        
+	
+else if InStr(ExTitle,"131-Iodine")
+	{
+	k = 3rd and 7th days
+	
+	if dose = 30 k = 3rd day		
+	sendinput	{enter}
+	sendinput	Radioactive I-131 therapy for thyroid cancer was performed using %dose% mCi of I-131.{enter}
+	sendinput	Whole body I-131 imaging will be acquired on the %k% after ingestion of I-131 capsule.{enter}		
+	}
+
+else if ExTitle = Whole body Bone scan
+	{
+	old_date := old_date()
+	sendinput	{Enter}
+	sendinput	Procedure:{enter}	
+	sendinput	` 20 mCi of Tc-99m HDP was intravenously injected, and whole body and spot images were obtained 3 hours later. {Enter}
+	sendinput	{Enter}
+	sendinput	Findings:{enter}
+	sendinput   ` Comparison: WBBS (%old_date%){enter}	
+	sendinput	` No osseous lesions suspicious for metastatic disease.{enter}
+	sendinput	` Other findings: None. {enter}
+	sendinput	{enter}Impression:{enter}
+	sendinput	` No scintigraphic evidence of bone metastasis.{enter}{enter}{space}{up}{space}
+	
+	if InStr(Array[11], "Bonemetastasis") or InStr(Array[11], "metastasistobone")
+		msgbox,0,,Caution: Known bone metastasis
+	}
+
+else	if InStr(ExTitle, "PET-CT Whole Body")
+	{
+	sendinput	{Enter}
+	sendinput	Procedure:{enter}
+	sendinput	` 10 mCi of F-18 FDG was given to the patient intravenously. PET imaging using a standard protocol was performed from the neck to the proximal thighs. The obtained images were reconstructed into axial, sagittal, and coronal planes. Low-dose, non-contrast-enhanced CT scan was performed primarily for anatomic localization and attenuation correction.
+	sendinput	{Enter}{Enter}
+	sendinput	Findings:{enter}
+	sendinput	` {enter}
+	sendinput	` {enter}
+	sendinput	Impression:{enter}
+	sendinput	` 1. No discernible FDG uptake to suggest tumor recurrence in this study.{enter}
+	sendinput	` 2. No definite metastatic lung nodule.{enter}
+	sendinput	` {enter}
+	sendinput	` {enter}
+	}
+	
+else if ExTitle=Salivary Scan
+{	
+	sendinput	{Enter}
+	sendinput	10 mCi of Tc-99m pertechnetate was intravenously injected. Dynamic images of the salivary glands were obtained before and after the gustatory stimulation.
+	sendinput	{Enter}{Enter}
+	sendinput	- Prominent Tc-99m pertechnetate uptake and prompt excretion after stimulation by both parotid and submandibular glands
+	sendinput	{Enter}{Enter}
+	sendinput	IMP: Normal finding
+	sendinput	{Enter}{Enter}
+}
+else if ExTitle = Hepatobiliary scan(DISIDA scan)
+{
+	sendinput	{Enter}
+	sendinput	The patient was injected with 20 mCi of Tc-99m DISIDA intravenously. Dynamic images of the abdomen were obtained for an hour and multiple spot views of the abdomen were performed.
+	sendinput	{Enter}{Enter}	
+}	
+else if ExTitle = [18F] FP-CIT  Brain positron emission computer tomography
+{
+	sendinput	{Enter}
+	sendinput	5 mCi of F-18 FP-CIT was given to the patient intravenously. PET imaging of the brain was performed using a standard protocol and reconstructed into axial, sagittal, and coronal planes.
+	sendinput	{Enter}{Enter}
+	sendinput	Normal DAT binding in the striatum.{enter}
+}
+else if ExTitle = Raynaud Scan
+{
+	sendinput	{Enter}
+	sendinput	Raynaud scan was performed after IV injection of 20 mCi of Tc-99m pertenchnetate. Dynamic and serial delayed images were obtained for both chilled and ambient hands.
+	sendinput	{Enter}{Enter}
+	sendinput	- Initial peak height and blood pool uptake were significantly lower in the chilled hand than the ambient hand.
+	sendinput	{Enter}{Enter}
+	sendinput	IMP: Positive Raynaud's phenomenon{enter}
+}
+else if ExTitle = 3-phase Bone scan
+{
+	sendinput	{enter}
+	sendinput 	The patient was injected with 740 mCi of Tc-99m HDP intravenously. Dynamic blood flow and pool images were obtained right after the intravenous injection of the radiotracers. Delayed bone images were also acquired 2 to 3 hours later.
+	sendinput	{Enter}{Enter}
+}
+else if ExTitle=PET-CT Limited(Brain with CM)
+{
+	sendinput	{Enter}
+	sendinput	10 mCi of F-18 FDG was given to the patient intravenously. PET imaging of the brain was performed using a standard protocol and reconstructed into axial, sagittal, and coronal planes.
+	sendinput	{Enter}{Enter}
+	sendinput	No abnormal increase or decrease in the regional cerebral and cerebellar glucose metabolism.
+	sendinput	{enter}
+}
+else if ExTitle = Whole body Bone scan & SPECT-CT
+{
+	sendinput	20 mCi of Tc-99m HDP was intravenously injected and whole body and spot images were obtained. SPECT/CT was performed for accurate localization and better characterization of increased uptake in the bilateral temopral areas.
+	sendinput	{Enter}{Enter}
+}
+
+
+send 	{alt up}
+send	{Shit up}
+Send	{Ctrl up}
+  
+return
+
+; #########################################################################################################################
+; #########################################################################################################################
+
+
+ISPECT(ExTitle)
+{
+	
+	filedelete, %A_ScriptDir%\save\ispect_def.txt	
+		
+	InputBox, T, Enter Thyroid bed uptake, ,
+	InputBox, N, Enter Nasal and Mouth uptake, , 
+	InputBox, S, Enter Salivary gland uptake, ,
+	InputBox, G, Enter Stomach uptake, ,
+
+	IfWinExist, Patient Jacket ahk_class SunAwtDialog
+				WinActivate
+		WinWaitActive, Patient Jacket ahk_class SunAwtDialog
+		
+	MouseClick, left, 800, 135
+		send	1{enter}
+		sleep	100
+	MouseClick, left, 1260, 100
+	MouseClick, left, 1260, 100
+		sleep 200
+	MouseClick, left, 800, 175
+		sleep 500
+	MouseClick, left, 800, 175
+		
+		send	^c
+		fileappend, %Clipboard%, %A_ScriptDir%\save\ispect_def.txt
+		sleep 100
+		FileReadLine, ddd01, %A_ScriptDir%\save\ispect_def.txt, 1
+			
+		StringReplace, ddd02, ddd01, %A_SPACE%,,All
+			StringGetPos, pos1, ddd02, mCi
+			StringGetPos, pos2, ddd02, Iodine
+		
+		pos2 += 6
+		StringLeft, ddd03, ddd02, pos1
+		StringTrimLeft, ddd, ddd03, pos2
+		
+		IfWinExist, 통합결과 조회[ExamRsltIntgView]
+			WinActivate	
+		WinWaitActive, 통합결과 조회[ExamRsltIntgView]
+
+		MouseClick, left, 260, 235
+		sleep 500
+		MouseClick, left, 480, 140
+		sendinput	{end}
+		sendinput	{Shift down}
+		sendinput	{left}{left}{left}{down}{down}
+		sendinput	{shift up}
+		send	^c
+		runWait, %A_ScriptDir%\lib\col_change.rexec,,hide
+
+	IfWinExist, report - 메모장 ahk_class Notepad
+	   WinActivate
+	else
+		run notepad %A_ScriptDir%\sav\report.txt
+	WinWaitActive, report - 메모장 ahk_class Notepad
+
+	;MsgBox, 0,, [%title%]
+
+	if InStr(ExTitle, "123")
+	{
+						
+					sendinput Whole body I-123 scan for thyroid cancer was performed using 5 mCi of I-123.
+					sendinput {enter}
+					sendinput {enter}
+					sendinput I-123 WBS revealed {enter}
+
+					if T=+
+						{
+					sendinput {space}Thyroid bed uptake ({+}): radioiodine accumulation in the lower neck area - DDx. remnant tissue vs. LN uptake, DDx. LN metastasis {enter}
+					sendinput {space}Regional neck LNs uptake (±), and upper mediastinal uptake (-) {enter}
+						}
+					if T=++
+						{
+					sendinput {space}Thyroid bed uptake ({+}): multifocal anterior/lower neck uptake; DDx. LN metastasis {enter}
+					sendinput {space}Regional neck LNs uptake (±), and upper mediastinal uptake (-) {enter}
+						}
+					if T=
+						{
+					sendinput {space}Thyroid bed uptake (-) {enter}
+					sendinput {space}Regional neck LNs uptake (-), and upper mediastinal uptake (-) {enter}
+						}
+
+					sendinput {space}Liver uptake (-) {enter}
+
+					if N=+
+					{
+					sendinput {space}Distant Metastasis (±): radioiodine accumulation in nasal region {enter}
+					}
+					if N=++
+					{
+					sendinput {space}Distant Metastasis (±): multifocal radioiodine accumulation in nasal and oral regions {enter}
+					}
+					if N=
+					{
+					sendinput {space}Distant Metastasis (-){enter}
+					}
+
+					if S=+
+					{
+					sendinput {space}Salivary glands uptake ({+})  {enter}
+					}
+					else
+					{
+					sendinput {space}Salivary glands uptake (-)  {enter}
+					}
+
+
+					if G=+
+					{
+					sendinput {space}Stomach accumulation ({+}) {enter}
+					sendinput {space} {enter}
+					}
+					else
+					{
+					sendinput {space}Stomach accumulation (-) {enter}
+					sendinput {space} {enter}
+					}
+
+					SP1 = focal radioiodine uptake in the anterior neck as benign or cervical LN metastasis
+					SP2 = multifocal I-123 uptake in the anterior neck as benign or malignant in cervical nodal or distant metastases
+					SP3 = indeterminate RAI uptake in the nasal region as benign or metastatic lesion
+					SP4 = multiple radioiodine uptake in nasal and oral regions as benign/physiologic or metastatic lesion
+					SP5 = indeterminate I-123 uptake foci in anterior neck and nasal regions  as benign/physiologic or metastatic lesion
+					SP6 = multifocal radioiodine uptake in the anterior neck, nasal and oral regions as benign or malignant in cervical LN or distant metastases
+
+
+					if T=
+					{
+						if N=+
+							SP:=SP3
+						if N=++
+							SP:=SP4
+						if N=
+							SP:=SP
+					}
+					if T=+
+					{
+						if N=+
+							SP:= SP5
+						if N=++
+							SP:= SP6	
+						if N=
+							SP:= SP1
+					}
+					if T=++
+					{
+						if N=+
+							SP:= SP5
+						if N=++
+							SP:= SP6	
+						if N=
+							SP:=SP2
+					}
+
+
+					sendinput Stimulated Tg Responsiveness {enter}
+					sendinput TSH {tab}
+					sendinput	^v
+					sendinput {up}{up}
+					sendinput	Tg{tab}
+					sendinput {down}
+					sleep 200
+					sendinput {home}
+					sendinput ATA{tab}{end}
+					sendinput	{enter}{enter}
+					sendinput Advise SPECT/CT for accurate anatomic localization and characterization of %SP%.
+					sendinput	{enter}{enter}
+
+
+					sendinput	{enter}{enter}
+					sendinput 	Additional SPECT/CT was performed for accurate localization and further characterization of %SP% on previous I-123 WBS. {enter}
+					sendinput	{enter}
+					sendinput 	I-123 SPECT/CT revealed {enter}
+
+					if T=
+					{
+					sendinput 	{space}Thyroid bed uptake (-) {enter}
+					sendinput 	{space}Regional neck LNs uptake (-), and upper mediastinal uptake (-): Negative LN uptake/metastasis {enter}
+					sendinput {space}Liver uptake (-) {enter}
+					}
+					else
+					{
+					sendinput 	{space}Thyroid bed uptake ({+}): remnant thyroid tissue uptake {enter}
+					sendinput 	{space}Regional neck LNs uptake (-), and upper mediastinal uptake (-): Negative LN uptake or metastasis{enter}
+					sendinput 	{space}Liver uptake (-) {enter}
+					}
+
+					if N=+
+					{
+					sendinput {space}Distant Metastasis (-): Probably physiologic accumulation in nasal secretion {enter}
+					}
+					if N=++
+					{
+					sendinput {space}Distant Metastasis (-): Benign I-123 uptake around dental prostheses and in nasal secretion {enter}
+					}
+					if N=
+					{
+					sendinput {space}Distant Metastasis (-) {enter}
+					}
+
+					if S=+
+					{
+					sendinput {space}Salivary glands uptake ({+})  {enter}
+					}
+					else
+					{
+					sendinput {space}Salivary glands uptake (-)  {enter}
+					}
+
+
+					if G=+
+					{
+					sendinput {space}Stomach accumulation ({+}) {enter}
+					sendinput {space} {enter}
+					}
+					else
+					{
+					sendinput {space}Stomach accumulation (-) {enter}
+					sendinput {space} {enter}
+					}
+
+					sendinput Stimulated Tg Responsiveness {enter}
+					sendinput TSH {tab}
+					sendinput	^v
+					sendinput {up}{up}
+					sendinput	Tg{tab}
+					sendinput {down}
+					sleep 200
+					sendinput {home}
+					sendinput ATA{tab}{end}
+					sendinput	{enter}{enter}
+					sendinput 	Advise clinical correlation and follow-up.  
+					sendinput	{enter}{enter}
+					return
+
+	}
+	IfNotInString, ExTitle, therapy
+	{
+			sendinput I-131 whole body scan for thyroid cancer was performed using 5 mCi of I-131.{enter}{enter}I-131 WBS revealed {enter}
+				
+				if T=+
+					{
+				sendinput {space}Thyroid bed uptake ({+}) {enter}
+				sendinput {space}Regional neck LNs uptake (±), and upper mediastinal uptake (-) {enter}
+					}
+				if T=++
+					{
+				sendinput {space}Thyroid bed uptake ({+}): multifocal neck uptake {enter}
+				sendinput {space}Regional neck LNs uptake (±), and upper mediastinal uptake (-) {enter}
+					}
+				if T=
+					{
+				sendinput {space}Thyroid bed uptake (-) {enter}
+				sendinput {space}Regional neck LNs uptake (-), and upper mediastinal uptake (-) {enter}
+					}
+
+				sendinput {space}Liver uptake (-) {enter}
+				sendinput {space}Distant Metastasis (-){enter}
+				
+				if S=+
+				{
+				sendinput {space}Salivary glands uptake ({+})  {enter}
+				}
+				else
+				{
+				sendinput {space}Salivary glands uptake (-)  {enter}
+				}
+
+
+				if G=+
+				{
+				sendinput {space}Stomach accumulation ({+}) {enter}
+				sendinput {space} {enter}
+				}
+				else
+				{
+				sendinput {space}Stomach accumulation (-) {enter}
+				sendinput {space} {enter}
+				}
+
+				sendinput Stimulated Tg Responsiveness {enter}
+				sendinput TSH {tab}
+				sendinput	^v
+				sendinput {up}{up}
+				sendinput	Tg{tab}
+				sendinput {down}
+				sleep 200
+				sendinput {home}
+				sendinput ATA{tab}{end}
+				sendinput	{enter}{enter}
+				sendinput Advise clinical correlation and follow-up.
+				sendinput	{enter}{enter}
+				return
+	}
+
+
+	if ddd > 30
+	{
+	sendinput Radioactive I-131 therapy and whole body I-131 scan for thyroid cancer was performed using %ddd% mCi of I-131.
+	sendinput {enter}
+	sendinput {enter}
+	sendinput Post RAIT I-131 WBS revealed {enter}
+
+	if T=+
+		{
+	sendinput {space}Thyroid bed uptake ({+}): localized midline neck uptake {enter}
+	sendinput {space}Regional neck LNs uptake (±), and upper mediastinal uptake (-) {enter}
+		}
+	if T=++
+		{
+	sendinput {space}Thyroid bed uptake ({+}): multifocal neck uptake - DDx. remnant thyroid tissue uptake vs. LN metastasis {enter}
+	sendinput {space}Regional neck LNs uptake (±), and upper mediastinal uptake (-) {enter}
+		}
+	if T=
+		{
+	sendinput {space}Thyroid bed uptake (-) {enter}
+	sendinput {space}Regional neck LNs uptake (-), and upper mediastinal uptake (-) {enter}
+		}
+
+	sendinput {space}Liver uptake (-) {enter}
+
+	if N=+
+	{
+	sendinput {space}Distant Metastasis (±): radioiodine accumulation in nasal region {enter}
+	}
+	if N=++
+	{
+	sendinput {space}Distant Metastasis (±): multifocal radioiodine accumulation in nasal and oral regions {enter}
+	}
+	if N=
+	{
+	sendinput {space}Distant Metastasis (-){enter}
+	}
+
+	if S=+
+	{
+	sendinput {space}Salivary glands uptake ({+})  {enter}
+	}
+	else
+	{
+	sendinput {space}Salivary glands uptake (-)  {enter}
+	}
+
+
+	if G=+
+	{
+	sendinput {space}Stomach accumulation ({+}) {enter}
+	sendinput {space} {enter}
+	}
+	else
+	{
+	sendinput {space}Stomach accumulation (-) {enter}
+	sendinput {space} {enter}
+	}
+
+	SP1 = focal radioiodine uptake in the anterior neck as benign or cervical LN metastasis
+	SP2 = multifocal I-131 uptake in the anterior neck as benign or malignant in cervical nodal or distant metastases
+	SP3 = indeterminate radioiodine uptake in the nasal region as benign or metastatic lesion
+	SP4 = multifocal radioiodine accumulation in nasal and oral regions as benign/physiologic or metastatic lesion
+	SP5 = indeterminate radioiodine accumulation in anterior neck and nasal regions  as benign/physiologic or metastatic lesion
+	SP6 = multifocal radioiodine uptake in the anterior neck, nasal and oral regions as benign or malignant in cervical LN or distant metastases
+
+
+	if T=
+	{
+		if N=+
+			SP:=SP3
+		if N=++
+			SP:=SP4
+		if N=
+			SP:=SP
+	}
+	if T=+
+	{
+		if N=+
+			SP:= SP5
+		if N=++
+			SP:= SP6	
+		if N=
+			SP:= SP1
+	}
+	if T=++
+	{
+		if N=+
+			SP:= SP5
+		if N=++
+			SP:= SP6	
+		if N=
+			SP:=SP2
+	}
+
+
+	sendinput Stimulated Tg Responsiveness {enter}
+	sendinput TSH {tab}
+	sendinput	^v
+	sendinput {up}{up}
+	sendinput	Tg{tab}
+	sendinput {down}
+	sleep 200
+	sendinput {home}
+	sendinput ATA{tab}{end}
+	sendinput	{enter}{enter}
+	sendinput Advise SPECT/CT for accurate anatomic localization and characterization of %SP%.
+	sendinput	{enter}{enter}
+
+
+	sendinput	{enter}{enter}
+	sendinput 	Additional SPECT/CT was performed for accurate localization and further characterization of %SP% on previous post-RAIT I-131 WBS. {enter}
+	sendinput	{enter}}
+	sendinput 	I-131 SPECT/CT revealed {enter}
+
+	if T=
+	{
+	sendinput 	{space}Thyroid bed uptake (-) {enter}
+	sendinput 	{space}Regional neck LNs uptake (-), and upper mediastinal uptake (-): Negative LN uptake/metastasis {enter}
+	sendinput {space}Liver uptake (-) {enter}
+	}
+	else
+	{
+	sendinput 	{space}Thyroid bed uptake ({+}): remnant thyroid tissue uptake {enter}
+	sendinput 	{space}Regional neck LNs uptake (-), and upper mediastinal uptake (-): Negative LN uptake or metastasis{enter}
+	sendinput 	{space}Liver uptake (-) {enter}
+	}
+
+	if N=+
+	{
+	sendinput {space}Distant Metastasis (-): Probably physiologic accumulation in nasal secretion {enter}
+	}
+	if N=++
+	{
+	sendinput {space}Distant Metastasis (-): Benign I-131 uptake around dental prostheses and in nasal secretion {enter}
+	}
+	if N=
+	{
+	sendinput {space}Distant Metastasis (-) {enter}
+	}
+
+	if S=+
+	{
+	sendinput {space}Salivary glands uptake ({+})  {enter}
+	}
+	else
+	{
+	sendinput {space}Salivary glands uptake (-)  {enter}
+	}
+
+
+	if G=+
+	{
+	sendinput {space}Stomach accumulation ({+}) {enter}
+	sendinput {space} {enter}
+	}
+	else
+	{
+	sendinput {space}Stomach accumulation (-) {enter}
+	sendinput {space} {enter}
+	}
+
+	sendinput Stimulated Tg Responsiveness {enter}
+	sendinput TSH {tab}
+	sendinput	^v
+	sendinput {up}{up}
+	sendinput	Tg{tab}
+	sendinput {down}
+	sleep 200
+	sendinput {home}
+	sendinput ATA{tab}{end}
+	sendinput	{enter}{enter}
+	sendinput 	Advise clinical correlation and follow-up for elevated post-RAIT Tg level and follow up with FDG PET/CT scan 6 months later.  
+	sendinput	{enter}{enter}
+
+	;}
+
+	return
+	}
+
+	;; ## for 30 mci
+
+	sendinput Radioactive I-131 therapy and whole body I-131 scan for thyroid cancer was performed using 30 mCi of I-131.{enter}{enter}Post RAIT I-131 WBS revealed {enter}
+			
+				if T=+
+					{
+				sendinput {space}Thyroid bed uptake ({+}) {enter}
+				sendinput {space}Regional neck LNs uptake (±), and upper mediastinal uptake (-) {enter}
+					}
+				if T=++
+					{
+				sendinput {space}Thyroid bed uptake ({+}): multifocal neck uptake {enter}
+				sendinput {space}Regional neck LNs uptake (±), and upper mediastinal uptake (-) {enter}
+					}
+				if T=
+					{
+				sendinput {space}Thyroid bed uptake (-) {enter}
+				sendinput {space}Regional neck LNs uptake (-), and upper mediastinal uptake (-) {enter}
+					}
+
+				sendinput {space}Liver uptake (-) {enter}
+				sendinput {space}Distant Metastasis (-){enter}
+				
+				if S=+
+				{
+				sendinput {space}Salivary glands uptake ({+})  {enter}
+				}
+				else
+				{
+				sendinput {space}Salivary glands uptake (-)  {enter}
+				}
+
+
+				if G=+
+				{
+				sendinput {space}Stomach accumulation ({+}) {enter}
+				sendinput {space} {enter}
+				}
+				else
+				{
+				sendinput {space}Stomach accumulation (-) {enter}
+				sendinput {space} {enter}
+				}
+
+				sendinput Stimulated Tg Responsiveness {enter}
+				sendinput TSH {tab}
+				sendinput	^v
+				sendinput {up}{up}
+				sendinput	Tg{tab}
+				sendinput {down}
+				sleep 200
+				sendinput {home}
+				sendinput ATA{tab}{end}
+				sendinput	{enter}{enter}
+				sendinput Advise clinical correlation and follow-up.
+				sendinput	{enter}{enter}
+				return
+
+	}
+			

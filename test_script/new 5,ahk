@@ -1,0 +1,4 @@
+a = "mybach"
+
+msgbox % a
+
