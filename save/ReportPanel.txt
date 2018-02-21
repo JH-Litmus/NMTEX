@@ -1,15 +1,20 @@
  
 ================================================================================ REPORT 
  
-Exam Requested : Whole body Bone scan     Referring Service : Unspecified     Exam Status : Verified 
-Requesting Physician : Unspecified     Date Scheduled : 2018.02.19 
+Exam Requested : [18F] FP-CIT  Brain positron emission computer tomography     Referring Service : 61 Ward     Exam Status : Verified 
+Requesting Physician : LYOO,CHUL HYOUNG     Date Scheduled : 2018.02.21 
  
-Patient Name : SONG YOON MI / º€¿±πÃ                              Patient ID : 6070427 
-Birth Date : 1975.01.15                           Sex : Female                   Date of Exam : 2018.02.19 
-Case No : 1708118903 
+Patient Name : KIM DONG SANG / ±ËµøªÛ                              Patient ID : 31396 
+Birth Date : 1949.08.02                           Sex : Male                     Date of Exam : 2018.02.21 
+Case No : 1802086678 
  
-Reason for Exam : Breast cancer, left 
+Reason for Exam : Anxiety disorder:Headache:Parkinsonism 
  
 Radiological Report : <START> 
-
  
+ 
+5 mCi of F-18 FP-CIT was given to the patient intravenously. PET imaging of the brain was performed using a standard protocol and reconstructed into axial, sagittal, and coronal planes.
+
+Diffuse loss of DAT binding in bilateral posterior putamina and caudate nuclei with Rt.-sided predominance.
+
+$
