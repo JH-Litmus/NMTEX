@@ -2,6 +2,7 @@ CompDate()
 {
 	mouseclick, left,,
 	filedelete,  %A_ScriptDir%\save\DateOCR.txt
+	filedelete,  %A_ScriptDir%\save\*.jpg
 	
 	; ## Capture position ##
 	x1 = %Mon1Left%
@@ -15,7 +16,7 @@ CompDate()
 	
 	; ## Capture, inversion, OCR-Read ##
 	runWait, "boxcutter" -c %x1%`,%y1%`,%x2%`,%y2% %A_ScriptDir%\save\cap.png,%A_ScriptDir%\ext\boxcutter\,hide
-	runWait, "magick" convert %A_ScriptDir%\save\cap.png -colors 2 %A_ScriptDir%\save\cap.jpg,%MAG_HOME%,hide
+	runWait, "magick" convert %A_ScriptDir%\save\cap.png -colors 2 -monochrome %A_ScriptDir%\save\cap.jpg,%MAG_HOME%,hide
 	runWait, "tesseract" --psm 7 --oem 0 %A_ScriptDir%\save\cap.jpg %A_ScriptDir%\save\DateOCR,%OCR_HOME%,hide
 	
 	; ## Extracting Date \##
