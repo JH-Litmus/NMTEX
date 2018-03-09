@@ -1,5 +1,6 @@
 
 a=matrix(1:12,ncol=4)
+as.character(a)
 a <- read.table(file = "clipboard", sep = "\t")
 V5 <-  c('TSH', 'Tg', 'ATA')
 a <- cbind(a,V5) 

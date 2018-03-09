@@ -9,7 +9,7 @@ ReportSend()
 	fileappend, `$, %A_ScriptDir%\save\ReportPanel.txt
 	sendinput	^v
 		
-	L = 14
+	L = 15
 	Loop
 	{		
 		FileReadLine, RLINE,  %A_ScriptDir%\save\ReportPanel.txt, L

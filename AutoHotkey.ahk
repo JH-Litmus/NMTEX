@@ -148,6 +148,15 @@ return
 		if InStr(Array[11], "Bonemetastasis") or InStr(Array[11], "metastasistobone")
 			msgbox,0,,Caution: Known bone metastasis
 	}
+	else	if InStr(ExTitle, "H.C")
+	{	
+		Loop	{
+			FileReadLine, line, %A_ScriptDir%\save\PET-HC.txt, %A_Index%
+			if ErrorLevel
+				break
+			sendinput	%line%{enter}			
+		}
+	}
 	else	if InStr(ExTitle, "PET-CT Whole Body")
 	{
 		CompDate := CompDate()
@@ -305,6 +314,8 @@ ISPECT(ExTitle)
 
 		
 	; ## Copy dose line on PACS ##
+	If InStr(ExTitle,"131")	
+	{
 		IfWinExist, Patient Jacket ahk_class SunAwtDialog
 			WinActivate
 		Else
@@ -332,6 +343,7 @@ ISPECT(ExTitle)
 		StringTrimLeft, ddd, ddd03, pos2 ;## ddd ##
 		if ddd=
 			input, ddd, Enter the RAI dose.
+	}
 	
 	; ## Retrieving Lab ##########
 		IfWinExist, 통합결과 조회[ExamRsltIntgView]
@@ -394,7 +406,17 @@ ISPECT(ExTitle)
 	else
 		run notepad %A_ScriptDir%\save\report.txt
 	WinWaitActive, report - 메모장
-
+	
+	If InStr(ExStyle, "123")
+	{
+		sendinput I-123 whole body scan for thyroid cancer was performed using 5 mCi of I-123.{enter}{enter}I-123 WBS revealed {enter}
+		desc(findings, line1, line2, line3, line4, line5, CNL, MNL, meta_imp,ddd)
+		sendinput	{enter}
+		sendinput	Advise clinical correlation and follow-up. 
+		sendinput 	{enter 2}
+		return	
+	}
+	
 	IfNotInString, ExTitle, therapy
 	{
 		ddd=5
