@@ -43,7 +43,7 @@ Return
 
 ::bss::
 	sendinput	Procedure:{enter}	
-	sendinput	` 20 mCi of Tc-99m HDP was intravenously injected, and whole body and spot images were obtained 3 hours later. {Enter}
+	sendinput	` Tc-99m HDP was intravenously injected, and whole body and spot images were obtained 3 hours later. {Enter}
 	sendinput	{Enter}
 	sendinput	Findings:{enter}
 	sendinput	` No osseous lesions suspicious for metastatic disease.{enter}
@@ -161,7 +161,7 @@ return
 	{
 		CompDate := CompDate()
 		sendinput	Procedure:{enter}
-		sendinput	` 10 mCi of F-18 FDG was given to the patient intravenously. PET imaging using a standard protocol was performed from the neck to the proximal thighs. The obtained images were reconstructed into axial, sagittal, and coronal planes. Low-dose, non-contrast-enhanced CT scan was performed primarily for anatomic localization and attenuation correction.
+		sendinput	` F-18 FDG was given to the patient intravenously. PET imaging using a standard protocol was performed from the neck to the proximal thighs. The obtained images were reconstructed into axial, sagittal, and coronal planes. Low-dose, non-contrast-enhanced CT scan was performed primarily for anatomic localization and attenuation correction.
 		sendinput	{Enter}{Enter}
 		sendinput	Findings:{enter}
 		sendinput   ` Comparison: previous PET/CT (%CompDate%).{enter}
@@ -174,7 +174,7 @@ return
 	else if ExTitle=Salivary Scan
 	{	
 		sendinput	Procedure:{enter}
-		sendinput	` 10 mCi of Tc-99m pertechnetate was intravenously injected. Dynamic images of the salivary glands were obtained before and after the gustatory stimulation.
+		sendinput	` Tc-99m pertechnetate was intravenously injected. Dynamic images of the salivary glands were obtained before and after the gustatory stimulation.
 		sendinput	{Enter}{Enter}
 		sendinput	Findings:{enter}
 		sendinput	` Prominent Tc-99m pertechnetate uptake and prompt excretion after stimulation by both parotid and submandibular glands.{enter}
@@ -185,19 +185,21 @@ return
 	}
 	else if ExTitle = Hepatobiliary scan(DISIDA scan)
 	{
-		sendinput	The patient was injected with 20 mCi of Tc-99m DISIDA intravenously. Dynamic images of the abdomen were obtained for an hour and multiple spot views of the abdomen were performed.
+		sendinput	The patient was injected with Tc-99m DISIDA intravenously. Dynamic images of the abdomen were obtained for an hour and multiple spot views of the abdomen were performed.
 		sendinput	{Enter}{Enter}	
 	}	
 	else if ExTitle = [18F] FP-CIT  Brain positron emission computer tomography
 	{
-		sendinput	5 mCi of F-18 FP-CIT was given to the patient intravenously. PET imaging of the brain was performed using a standard protocol and reconstructed into axial, sagittal, and coronal planes.
+		sendinput	Procedure:{enter}
+		sendinput	` F-18 FP-CIT was given to the patient intravenously. PET imaging of the brain was performed using a standard protocol and reconstructed into axial, sagittal, and coronal planes.
 		sendinput	{Enter}{Enter}
-		sendinput	Normal DAT binding in the striatum.{enter}
+		sendinput	Findings and impression:{Enter}
+		sendinput	` Normal DAT binding in the striatum.{enter}
 	}
 	else if ExTitle = Raynaud Scan
-	{
+	{	
 		sendinput	Procedure:{enter}
-		sendinput	` Raynaud scan was performed after IV injection of 20 mCi of Tc-99m pertenchnetate. Dynamic and serial delayed images were obtained for both chilled and ambient hands.
+		sendinput	` Raynaud scan was performed after IV injection of Tc-99m pertenchnetate. Dynamic and serial delayed images were obtained for both chilled and ambient hands.
 		sendinput	{Enter}{Enter}
 		sendinput	Findings:{enter}
 		sendinput	` Loss of initial peak.{enter}
@@ -208,19 +210,19 @@ return
 	}
 	else if ExTitle = 3-phase Bone scan
 	{
-		sendinput 	The patient was injected with 740 mCi of Tc-99m HDP intravenously. Dynamic blood flow and pool images were obtained right after the intravenous injection of the radiotracers. Delayed bone images were also acquired 2 to 3 hours later.
+		sendinput 	The patient was injected with Tc-99m HDP intravenously. Dynamic blood flow and pool images were obtained right after the intravenous injection of the radiotracers. Delayed bone images were also acquired 2 to 3 hours later.
 		sendinput	{Enter}{Enter}
 	}
 	else if InStr(ExTitle,"Limited") or Instr(ExTitle, "PET-CT Brain")
 	{
-		sendinput	10 mCi of F-18 FDG was given to the patient intravenously. PET imaging of the brain was performed using a standard protocol and reconstructed into axial, sagittal, and coronal planes.
+		sendinput	` F-18 FDG was given to the patient intravenously. PET imaging of the brain was performed using a standard protocol and reconstructed into axial, sagittal, and coronal planes.
 		sendinput	{Enter}{Enter}
 		sendinput	No abnormal increase or decrease in the regional cerebral and cerebellar glucose metabolism.
 		sendinput	{enter}
 	}
 	else if ExTitle = Whole body Bone scan & SPECT-CT
 	{
-		sendinput	20 mCi of Tc-99m HDP was intravenously injected and whole body and spot images were obtained. SPECT/CT was performed for accurate localization and better characterization of increased uptake in the bilateral temopral areas.
+		sendinput	` Tc-99m HDP was intravenously injected and whole body and spot images were obtained. SPECT/CT was performed for accurate localization and better characterization of increased uptake in the bilateral temopral areas.
 		sendinput	{Enter}{Enter}
 	}
 
@@ -327,12 +329,12 @@ ISPECT(ExTitle)
 			sleep	100
 		MouseClick, left, 1260, 100
 		MouseClick, left, 1260, 100
-			sleep 200
-		MouseClick, left, 800, 175
 			sleep 500
 		MouseClick, left, 800, 175
-			sleep 100
-		send	^c
+			sleep 200
+		MouseClick, left, 800, 175
+			sleep 200
+			send	^c
 		fileappend, %Clipboard%, %A_ScriptDir%\save\TherapyLine.txt
 		FileReadLine, ddd01, %A_ScriptDir%\save\TherapyLine.txt, 1  
 		StringReplace, ddd02, ddd01, %A_SPACE%,,All
@@ -407,18 +409,45 @@ ISPECT(ExTitle)
 		run notepad %A_ScriptDir%\save\report.txt
 	WinWaitActive, report - 메모장
 	
-	If InStr(ExStyle, "123")
-	{
-		sendinput I-123 whole body scan for thyroid cancer was performed using 5 mCi of I-123.{enter}{enter}I-123 WBS revealed {enter}
-		desc(findings, line1, line2, line3, line4, line5, CNL, MNL, meta_imp,ddd)
-		sendinput	{enter}
-		sendinput	Advise clinical correlation and follow-up. 
-		sendinput 	{enter 2}
-		return	
-	}
+	
 	
 	IfNotInString, ExTitle, therapy
 	{
+		If InStr(ExTitle, "123")
+		{
+			sendinput I-123 whole body scan for thyroid cancer was performed using 5 mCi of I-123.{enter}{enter}I-123 WBS revealed {enter}
+			sendinput	` Head and Neck: {space}
+			; ## 보험관련 ##
+				if findings not contains 0,2,4,5,6	
+				{
+					line1 = negative
+					sendinput	Increased uptake in paranasal`, medial orbital`, and/or oral regions.{enter}
+				}
+				else
+					sendinput	%line1% {enter}			
+			sendinput	` Mediastinum: %line2% {enter}
+			sendinput 	` Liver: negative. {enter}
+			sendinput	` Distant regions: %line3%{enter}
+			sendinput	` Salivary gland: %line4% {enter}
+			sendinput	` Stomach: %line5% {enter}
+			sendinput	{enter}
+			sendinput 	Stimulated Tg Responsiveness {enter}
+			sendinput	^v
+			sendinput	{enter}	
+			sendinput	Advise SPECT/CT for accurate localization and better characterization of %reason_spect% as benign or malignant in LN and distant metastasis.{enter}
+			sendinput	{enter	3}		
+			sendinput	Regional SPECT/CT was performed for accurate localization and better characterization of %reason_spect% as benign or malignant in LN and distant metastasis.{enter}{enter}I-123 SPECT/CT revealed{enter}
+			desc(findings, line1, line2, line3, line4, line5, CNL, MNL, meta_imp,100)
+			sendinput	Advise clinical correlation and follow-up with FDG PET/CT scan 6 months later. 
+			sendinput 	{enter 2}
+			
+			
+			
+			
+			
+			return	
+		}
+		
 		ddd=5
 		sendinput I-131 whole body scan for thyroid cancer was performed using 5 mCi of I-131.{enter}{enter}I-131 WBS revealed {enter}
 		desc(findings, line1, line2, line3, line4, line5, CNL, MNL, meta_imp,ddd)
