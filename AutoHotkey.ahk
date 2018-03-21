@@ -136,7 +136,7 @@ return
 	{	
 		CompDate := CompDate()
 		sendinput	Procedure:{enter}	
-		sendinput	` 20 mCi of Tc-99m HDP was intravenously injected, and whole body and spot images were obtained 3 hours later. {Enter}
+		sendinput	` Tc-99m HDP was intravenously injected, and whole body and spot images were obtained 3 hours later. {Enter}
 		sendinput	{Enter}
 		sendinput	Findings:{enter}
 		sendinput   ` Comparison: previous WBBS (%CompDate%).{enter}	

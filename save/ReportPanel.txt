@@ -1,15 +1,29 @@
  
 ================================================================================ REPORT 
  
-Exam Requested : PET-CT Whole Body Scan(Torso) (H.C)(without C/M)     Referring Service : OPD     Exam Status : Verified 
-Requesting Physician : YDPET001     Date Scheduled : 2018.03.19 
+Exam Requested : Whole body Bone scan     Referring Service : 54 Ward     Exam Status : Verified 
+Requesting Physician : Unspecified     Date Scheduled : 2018.03.21 
  
-Patient Name : CHEONG MUN KUK / 정문국                              Patient ID : 6750075 
-Birth Date : 1959.05.23                           Sex : Male                     Date of Exam : 2018.03.19 
-Case No : 1803076884 
+Patient Name : CHO YOO KYUNG / 조유경                              Patient ID : 6941162 
+Birth Date : 1962.10.20                           Sex : Female                   Date of Exam : 2018.03.21 
+Case No : 1803095445 
  
-Reason for Exam : Health check-up 
+Reason for Exam : Metastasis to axillary lymph node:Metastasis to bone:Breast cancer 
  
 Radiological Report : <START> 
  
  
+Procedure:
+ Tc-99m HDP was intravenously injected, and whole body and spot images were obtained 3 hours later. 
+
+Findings:
+ Comparison: previous WBBS (Mar21, 2018).
+ No significant change of previously noted uptake lesions in T- and L-spine and sacrum.
+ No new lesion.
+ Other findings: none. 
+
+Impression:
+ No change of bone metastasis without new lesion.
+
+ 
+ $
